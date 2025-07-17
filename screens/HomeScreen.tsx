@@ -7,13 +7,14 @@ import { usePlaces } from '../hooks/usePlaces';
 export default function HomeScreen() {
 
   const location = useCurrentLocation();
+
   const { places: arroundPlaces, loading: arroundLoading } = usePlaces({ lat: location?.coords.latitude, lng: location?.coords.longitude });
-  const { places: cityPlaces, loading: cityLoading } = usePlaces({ city: 'Niaga' });
+  const { places: popularPlaces, loading: popularLoading } = usePlaces({ minRating: 3 });
 
   return (
     <>
-      <Section title={"Arround me"} places={arroundPlaces} loading={arroundLoading} />
-      <Section title={"Niaga"} places={cityPlaces} loading={cityLoading} />
+      <Section title={"Arround me"} places={arroundPlaces} loading={arroundLoading} /><br /><br /><br />
+      <Section title={"Popular"} places={popularPlaces} loading={popularLoading} /><br /><br /><br />
 
     </>
   )
