@@ -1,11 +1,14 @@
 import { Header } from '../../components/Header';
-import { useCurrentLocation } from '../../hooks/useCurrentLocation';
+import { useStorage } from '../../contexts/storage.context';
 import { HomeHeader } from './HomeHeader';
 
 export const HomeScreen = () => {
-  const location = useCurrentLocation();
 
-  return <Header>
-    <HomeHeader />
-  </Header>
+  const { settings } = useStorage();
+
+  return <>
+    <Header>
+      <HomeHeader />
+    </Header>
+  </>
 }
