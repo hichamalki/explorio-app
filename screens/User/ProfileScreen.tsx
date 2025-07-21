@@ -6,19 +6,20 @@ import { Header } from "../../components/Header";
 export const ProfileScreen = () => {
     const { auth } = useAuth();
 
-    if (auth && auth.user) {
-        return (
-            <>
-                <Header></Header>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>Bonjour {auth.user.firstName} {auth.user.lastName}</Text>
-                </View>
-            </>
-        )
+    if (!auth || !auth.user) {
+        return <>
+            <Header></Header>
+            <LoginForm />
+        </>
     }
-    return <>
-        <Header></Header>
-        <LoginForm />
-    </>
+
+    return (
+        <>
+            <Header></Header>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Bonjour {auth.user.firstName} {auth.user.lastName}</Text>
+            </View>
+        </>
+    )
 
 };

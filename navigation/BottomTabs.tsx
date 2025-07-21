@@ -4,14 +4,11 @@ import MapScreen from '../screens/MapScreen';
 import SearchScreen from '../screens/SearchScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import { Ionicons } from '@expo/vector-icons';
-import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { useSettings } from '../contexts/settings.context';
 import { ProfileScreen } from '../screens/User/ProfileScreen';
-import { useEffect } from 'react';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
 
 export default function BottomTabs() {
 

@@ -1,10 +1,14 @@
 import { View, Text, StyleSheet } from 'react-native';
+import { Header } from '../components/Header';
 
 export default function SearchScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>La page de la recherche à venir 🗺️</Text>
-    </View>
+    <>
+      <Header></Header>
+      <View style={styles.container}>
+        <Text style={styles.text}>La page de la recherche à venir 🗺️</Text>
+      </View>
+    </>
   );
 }
 
