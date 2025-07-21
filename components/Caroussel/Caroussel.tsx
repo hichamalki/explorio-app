@@ -6,7 +6,7 @@ export const Caroussel = ({ data, itemComponent }: any) => {
             style={ls.flatList}
             horizontal
             data={data}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item._id}
             showsHorizontalScrollIndicator={false}
             renderItem={itemComponent}
         />

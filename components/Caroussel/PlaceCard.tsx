@@ -3,8 +3,8 @@ import { styles as gs } from "../../shared/styles/styles";
 
 export const PlaceCard = ({ item }: any) => {
     return (
-        <View style={ls.card}>
-            <Image style={ls.image} source={{ uri: 'http://localhost:3000/uploads/places/tour-hassan.jpg' }} />
+        <View style={ls.card} key={item._id}>
+            <Image style={ls.image} source={{ uri: `http://localhost:3000${item.media[0].url}` }} />
             <Text style={ls.title}>{item.title}</Text>
             <Text style={ls.subtitle}>{item.location.city} {item.location.country}</Text>
             <View style={gs.row}>
