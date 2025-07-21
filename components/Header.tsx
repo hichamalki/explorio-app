@@ -2,14 +2,17 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles as gs } from '../shared/styles/styles';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../contexts/auth.context';
 
 export const Header = ({ children }: any) => {
+    const { auth, logout } = useAuth();
     return (
         <View style={[gs.col, ls.container]}>
             <View style={[gs.row, gs.spaceBetween, ls.top]}>
                 <Text style={ls.title}>Explor.io</Text>
                 <View style={[gs.row]}>
-                    <Ionicons name="person-circle-outline" style={ls.menu} />
+                    {auth && auth.user && <Ionicons name="person-circle-outline" style={ls.menu} onPress={() => logout()} />}
                     <Ionicons name="menu-outline" style={ls.menu} />
                 </View>
             </View>
