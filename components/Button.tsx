@@ -10,16 +10,6 @@ export const Button = ({ title, onPress, style, light, loading = false }: any) =
   </TouchableOpacity>
 );
 
-// import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-
-// export const Button = ({ title, onPress, style, light }: any) => {
-//     return (
-//         <TouchableOpacity style={[styles.button, style, light ? styles.buttonLight : null]} onPress={onPress}>
-//             <Text style={[styles.buttonText, light ? styles.buttonTextLight : null]}>{title}</Text>
-//         </TouchableOpacity>
-//     )
-// }
-
 const styles = StyleSheet.create({
     button: {
         backgroundColor: '#205A7B',
