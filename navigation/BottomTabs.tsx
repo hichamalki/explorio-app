@@ -14,10 +14,6 @@ export default function BottomTabs() {
 
   const { settings, updateSetting } = useSettings();
 
-  if (settings && !settings['global.tab.active']) {
-    return;
-  }
-
   return (
     <NavigationContainer
       onStateChange={(state) => {

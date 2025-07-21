@@ -1,13 +1,14 @@
 import { AuthProvider } from './contexts/auth.context';
 import { SettingsProvider } from './contexts/settings.context';
-import BottomTabs from './navigation/BottomTabs';
+import { SplashScreen } from './screens/Splash/SplashScreen';
 
 export default function App() {
+
   return (
     <AuthProvider>
       <SettingsProvider>
-        <BottomTabs />
+        <SplashScreen />
       </SettingsProvider>
     </AuthProvider>
-  );
+  )
 }
