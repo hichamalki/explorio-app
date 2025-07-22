@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     col: {
@@ -22,4 +22,7 @@ export const styles = StyleSheet.create({
     mt50: {
         marginTop: 50
     },
+    iosHeader: {
+        ...(Platform.OS === 'ios' && { paddingTop: 50 })
+    }
 });

@@ -2,13 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles as gs } from '../shared/styles/styles';
-import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../contexts/auth.context';
 
 export const Header = ({ children }: any) => {
     const { auth, logout } = useAuth();
     return (
-        <View style={[gs.col, ls.container]}>
+        <View style={[gs.col, gs.iosHeader, ls.container]}>
             <View style={[gs.row, gs.spaceBetween, ls.top]}>
                 <Text style={ls.title}>Explor.io</Text>
                 <View style={[gs.row]}>
