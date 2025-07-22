@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, ScrollView } from 'react-native';
 import { useAuth } from '../../contexts/auth.context';
-import { signin, signup } from '../../services/User.service';
+import { getProfile, signin, signup } from '../../services/User.service';
 import { jwtDecode } from 'jwt-decode';
 import { User } from '../../models/User';
 import { Button } from '../../components/Button';
@@ -34,12 +34,9 @@ export const LoginForm = () => {
 
         try {
             const token = await signin({ email, password })
-            const payload: any = jwtDecode(token);
-            const user: User = {
-                email: payload.email,
-                firstName: payload.firstName || '',
-                lastName: payload.lastName || '',
-            };
+            const { firstName, lastName, avatar } = await getProfile(token)
+            const user: User = { email, firstName, lastName, avatar };
+            console.log(user)
             await login(user, token);
         } catch (e: any) {
             setError(e?.response?.data?.error)

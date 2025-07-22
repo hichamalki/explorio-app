@@ -5,23 +5,23 @@ import SearchScreen from '../screens/SearchScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { HomeScreen } from '../screens/Home/HomeScreen';
-import { useSettings } from '../contexts/settings.context';
+import { usePreferences } from '../contexts/preferences.context';
 import { ProfileScreen } from '../screens/User/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabs() {
 
-  const { settings, updateSetting } = useSettings();
+  const { preferences, updatePreference } = usePreferences();
 
   return (
     <NavigationContainer
       onStateChange={(state) => {
         const currentRoute = state?.routes[state.index]?.name;
-        if (currentRoute) updateSetting('global.tab.active', currentRoute);
+        if (currentRoute) updatePreference('navigation', currentRoute);
       }}
     >
-      <Tab.Navigator initialRouteName={settings['global.tab.active']}
+      <Tab.Navigator initialRouteName={preferences['navigation']}
         screenOptions={{ headerShown: false, tabBarActiveTintColor: '#205A7B' }}>
         <Tab.Screen
           name="Accueil"

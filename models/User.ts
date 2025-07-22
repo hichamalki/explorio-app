@@ -1,7 +1,8 @@
 export type User = {
     email: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    avatar: string
 }
 
 export type AuthState = {

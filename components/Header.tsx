@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles as gs } from '../shared/styles/styles';
 import { useAuth } from '../contexts/auth.context';
+import { globalConfig } from '../app.config';
 
 export const Header = ({ children }: any) => {
     const { auth, logout } = useAuth();
@@ -11,7 +12,11 @@ export const Header = ({ children }: any) => {
             <View style={[gs.row, gs.spaceBetween, ls.top]}>
                 <Text style={ls.title}>Explor.io</Text>
                 <View style={[gs.row]}>
-                    {auth && auth.user && <Ionicons name="person-circle-outline" style={ls.menu} onPress={() => logout()} />}
+
+                    {auth && auth.user && auth.user.avatar && <View style={ls.avatarWrapper}>
+                        <Image source={{ uri: `${globalConfig.host}${auth.user.avatar}` }} style={ls.avatar} />
+                    </View>}
+                    {auth && auth.user && !auth.user.avatar && <Ionicons name="person-circle-outline" style={ls.menu} onPress={() => logout()} />}
                     <Ionicons name="menu-outline" style={ls.menu} />
                 </View>
             </View>
@@ -21,6 +26,17 @@ export const Header = ({ children }: any) => {
 };
 
 const ls = StyleSheet.create({
+    avatarWrapper: {
+        padding: 2,
+        borderWidth: 2,
+        borderColor: '#ffffff',
+        borderRadius: 20,
+    },
+    avatar: {
+        width: 20,
+        height: 20,
+        borderRadius: 20,
+    },
     container: {
         backgroundColor: '#205A7B',
         paddingVertical: 10

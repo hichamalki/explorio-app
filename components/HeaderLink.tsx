@@ -2,19 +2,19 @@ import { Text, TouchableOpacity } from "react-native"
 import { StyleSheet } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { styles as gs } from "../shared/styles/styles";
-import { useSettings } from "../contexts/settings.context";
+import { usePreferences } from "../contexts/preferences.context";
 import { useEffect, useState } from "react";
 
-export const HeaderLink = ({ text, icon }: any) => {
+export const HeaderLink = ({ text, icon, category }: any) => {
 
-    const { settings, updateSetting } = useSettings();
+    const { preferences, updatePreference } = usePreferences();
     const [active, setActive] = useState(false);    
 
     useEffect(() => {
-        setActive(settings['header.active'] === text);
-    }, [settings]);
+        setActive(preferences['category'] === category);
+    }, [preferences]);
 
-    return <TouchableOpacity style={[ls.link, gs.row, active && ls.active]} onPress={() => updateSetting(`header.active`, text)}>
+    return <TouchableOpacity style={[ls.link, gs.row, active && ls.active]} onPress={() => updatePreference(`category`, category)}>
         {icon && <Ionicons name={icon} style={[ls.icon, active && ls.active]} />}
         <Text style={[ls.text, active && ls.active]}>{text}</Text>
     </TouchableOpacity>
