@@ -14,4 +14,5 @@ export type AuthContextType = {
   auth: AuthState;
   login: (user: User, token: string) => Promise<void>;
   logout: () => Promise<void>;
+  loadProfile: (token: string) => void
 };

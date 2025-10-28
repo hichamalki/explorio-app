@@ -36,7 +36,6 @@ export const LoginForm = () => {
             const token = await signin({ email, password })
             const { firstName, lastName, avatar } = await getProfile(token)
             const user: User = { email, firstName, lastName, avatar };
-            console.log(user)
             await login(user, token);
         } catch (e: any) {
             setError(e?.response?.data?.error)
