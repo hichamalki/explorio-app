@@ -6,8 +6,12 @@ import { globalConfig } from "../../app.config"
 export const PlaceCard = ({ item }: any) => {
     return (
         <View style={ls.card} key={item._id}>
-            <Ionicons name="heart-outline" style={ls.fav}/>
-            <Image style={ls.image} source={{ uri: `${globalConfig.host}${item.media[0].url}` }} />
+            <Ionicons name="heart" style={ls.fav} />
+            <Image style={ls.image} source={{
+                uri: item.media[0].url.startsWith('http')
+                    ? item.media[0].url
+                    : `${globalConfig.host}${item.media[0].url}`
+            }} />
             <Text style={ls.title}>{item.title}</Text>
             <Text style={ls.subtitle}>{item.location.city} {item.location.country}</Text>
             <View style={gs.row}>
@@ -45,11 +49,10 @@ const ls = StyleSheet.create({
         color: '#ffffff',
         fontSize: 25,
         fontWeight: 'bold',
-        borderRadius: 50,
         position: 'absolute',
         zIndex: 999,
         top: 5,
-        right: 5
+        right: 5,
     },
     image: {
         width: 220,

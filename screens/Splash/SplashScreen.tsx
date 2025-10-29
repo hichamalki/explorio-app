@@ -6,32 +6,14 @@ import { View, Image, StyleSheet, Text } from 'react-native';
 import { fetchCities } from '../../services/Settings.service';
 
 export const SplashScreen = () => {
-    const [showSplash, setShowSplash] = useState(false);
-    const { loadPreferences } = usePreferences();
-    const { storeObject, restoreObject } = useStorage();
+    const [showSplash, setShowSplash] = useState(true);
+    const { isLoaded, } = usePreferences();
 
     useEffect(() => {
-        const init = async () => {
-            let preferences = await restoreObject('preferences');
-            if (!preferences) {
-                preferences = {};
-                setShowSplash(true)
-            }
-            if (!preferences['navigation']) {
-                preferences['navigation'] = 'Accueil'
-            }
-            if (!preferences['category']) {
-                preferences['category'] = 'activity'
-            }
-            if (!preferences['cities']) {
-                preferences['cities'] = await fetchCities()
-            }
-            await storeObject('preferences', preferences)
-            loadPreferences()
+        if (isLoaded) {
             setTimeout(() => setShowSplash(false), 2000);
-        };
-        init();
-    }, []);
+        }
+    }, [isLoaded]);
 
     if (showSplash) {
         return (

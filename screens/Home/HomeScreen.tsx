@@ -13,7 +13,7 @@ import { usePreferences } from '../../contexts/preferences.context';
 export const HomeScreen = () => {
 
   const { preferences } = usePreferences();
-  const { category, cities } = preferences;
+  const { category, settings: {cities} } = preferences;
 
   const { places: brPlaces, loading: brLoading } = usePlaces({ minRating: 3, tags: [category] });
 
@@ -22,8 +22,8 @@ export const HomeScreen = () => {
       <HomeHeader />
     </Header>
     <ScrollView contentContainerStyle={ls.scrollView}>
-      <Card key="elm" title="Explorrer le Maroc" subtitle="Les hôtels les plus populaires dans les villes les plus visitées">
-        <Caroussel data={cities} itemComponent={Item} />
+      <Card key="elm" title="Explorer le Maroc" subtitle="Les hôtels les plus populaires dans les villes les plus visitées">
+        <Caroussel data={cities.data} itemComponent={Item} />
       </Card>
 
       <Card key="lmn" title="Les mieux notés" subtitle="Séjournez dans des hébergements uniques, les mieux notés par les utilisateurs explor.io">
