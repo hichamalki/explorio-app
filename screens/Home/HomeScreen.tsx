@@ -15,7 +15,7 @@ export const HomeScreen = () => {
   const { preferences } = usePreferences();
   const { category, settings: {cities} } = preferences;
 
-  const { places: brPlaces, loading: brLoading } = usePlaces({ minRating: 3, tags: [category] });
+  const { places: brPlaces, loading: brLoading }: any = usePlaces({ minRating: 3, tags: [category] });
 
   return <>
     <Header>
@@ -27,7 +27,7 @@ export const HomeScreen = () => {
       </Card>
 
       <Card key="lmn" title="Les mieux notés" subtitle="Séjournez dans des hébergements uniques, les mieux notés par les utilisateurs explor.io">
-        {brLoading ? <Loader /> : <Caroussel data={brPlaces} itemComponent={PlaceCard} />}
+        {brLoading ? <Loader /> : <Caroussel data={brPlaces.places} itemComponent={PlaceCard} />}
       </Card>
     </ScrollView>
   </>

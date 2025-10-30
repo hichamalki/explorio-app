@@ -5,10 +5,10 @@ import { styles as gs } from '../shared/styles/styles';
 import { useAuth } from '../contexts/auth.context';
 import { globalConfig } from '../app.config';
 
-export const Header = ({ children }: any) => {
+export const Header = ({ customStyle, children }: any) => {
     const { auth, logout } = useAuth();
     return (
-        <View style={[gs.col, gs.iosHeader, ls.container]}>
+        <View style={[gs.col, gs.iosHeader, ls.container, customStyle]}>
             <View style={[gs.row, gs.spaceBetween, ls.top]}>
                 <Text style={ls.title}>Explor.io</Text>
                 <View style={[gs.row]}>

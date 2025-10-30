@@ -2,55 +2,75 @@ import { useEffect, useMemo, useState } from 'react';
 import { fetchPlaces } from '../services/Place.service';
 
 type Options = {
-    city?: string,
-    country?: string,
-    tags?: string[],
     q?: string,
+    cities?: string[],
+    tags?: string[],
+    ratings?: number[],
+    minRating?: number,
     lat?: number,
     lng?: number,
     radius?: number,
-    minRating?: number,
     page?: number,
     limit?: number
 };
 
 export function usePlaces(options: Options = {}) {
     const [places, setPlaces] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const queryString = useMemo(() => {
-        const query = new URLSearchParams({
-            ...(options.city && { city: options.city }),
-            ...(options.country && { country: options.country }),
-            ...(options.tags && { tags: options.tags.join(',') }),
-            ...(options.q && { q: options.q }),
-            ...(options.lat && { lat: options.lat.toString() }),
-            ...(options.lng && { lng: options.lng.toString() }),
-            ...(options.radius && { radius: options.radius?.toString() }),
-            ...(options.minRating && { minRating: options.minRating?.toString() }),
-            ...(options.page && { page: options.page?.toString() }),
-            ...(options.limit && { limit: options.limit?.toString() }),
-        });
+        const query = new URLSearchParams();
+
+        if (options.q !== undefined && (options?.q.length === 0 || options?.q.length > 2)) query.append('q', options.q);
+        if (options.minRating) query.append('minRating', options.minRating.toString());
+        if (options.radius) query.append('radius', options.radius.toString());
+        if (options.lat) query.append('lat', options.lat.toString());
+        if (options.lng) query.append('lng', options.lng.toString());
+        if (options.page) query.append('page', options.page.toString());
+        if (options.limit) query.append('limit', options.limit.toString());
+
+        if (options.cities?.length) {
+            options.cities.forEach(city => query.append('cities', city));
+        }
+
+        if (options.tags?.length) {
+            options.tags.forEach(tag => query.append('tags', tag));
+        }
+
+        if (options.ratings?.length) {
+            options.ratings.forEach(rating => query.append('ratings', rating.toString()));
+        }
+
         return query.toString();
     }, [
-        options.city,
-        options.country,
-        options.tags?.join(','),
         options.q,
+        options.cities?.join(','),
+        options.tags?.join(','),
+        options.ratings?.join(','),
+        options.minRating,
         options.lat,
         options.lng,
         options.radius,
-        options.minRating,
         options.page,
         options.limit
     ]);
 
     useEffect(() => {
-        if (queryString) {
+            setLoading(true);
             fetchPlaces(queryString)
-                .then(data => setPlaces(data))
+                .then(data => {
+                    setPlaces((prev: any) => {
+                        if (options.page && options.page > 1) {
+                            return {
+                                ...data,
+                                places: [...(prev?.places || []), ...data.places]
+                            };
+                        } else {
+                            return data;
+                        }
+                    });
+                })
                 .finally(() => setLoading(false));
-        }
     }, [queryString]);
 
     return { places, loading };

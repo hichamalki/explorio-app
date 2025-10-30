@@ -24,5 +24,8 @@ export const styles = StyleSheet.create({
     },
     iosHeader: {
         ...(Platform.OS === 'ios' && { paddingTop: 50 })
+    },
+    scrollView: {
+        // paddingBottom: 50
     }
 });
