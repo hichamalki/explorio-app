@@ -1,14 +1,17 @@
 import { globalConfig } from '../../app.config';
 import { styles as gs } from '../../shared/styles/styles';
-import { StyleSheet, Image, Text, View } from "react-native";
+import { StyleSheet, Image, Text, View, Pressable } from "react-native";
 
-export const Item = ({ item }: any) => {
+export const Item = ({ item, onPress }: any) => {
+
     return (
-        <View style={[gs.col, ls.item]}>
-            <Image source={{ uri: `${globalConfig.host}${item.image}` }} style={ls.image} />
-            <Text style={ls.title}>{item.title}</Text>
-            <Text style={ls.subtitle}>{item.count} établissement{item.count>1?'s':''}</Text>
-        </View>
+        <Pressable onPress={onPress}>
+            <View style={[gs.col, ls.item]}>
+                <Image source={{ uri: `${globalConfig.host}${item.image}` }} style={ls.image} />
+                <Text style={ls.title}>{item.title}</Text>
+                <Text style={ls.subtitle}>{item.count} établissement{item.count > 1 ? 's' : ''}</Text>
+            </View>
+        </Pressable>
     )
 }
 

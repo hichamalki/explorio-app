@@ -9,11 +9,16 @@ import { useCurrentLocation } from '../../hooks/useCurrentLocation';
 import { usePlaces } from '../../hooks/usePlaces';
 import { Loader } from '../../components/Loader';
 import { usePreferences } from '../../contexts/preferences.context';
+import { useNavigation } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { BottomTabParamList } from '../../navigation/BottomTabs';
 
 export const HomeScreen = () => {
 
+  const navigation = useNavigation<BottomTabNavigationProp<BottomTabParamList>>();
+
   const { preferences } = usePreferences();
-  const { category, settings: {cities} } = preferences;
+  const { category, settings: { cities } } = preferences;
 
   const { places: brPlaces, loading: brLoading }: any = usePlaces({ minRating: 3, tags: [category] });
 
@@ -23,7 +28,7 @@ export const HomeScreen = () => {
     </Header>
     <ScrollView contentContainerStyle={ls.scrollView}>
       <Card key="elm" title="Explorer le Maroc" subtitle="Les hôtels les plus populaires dans les villes les plus visitées">
-        <Caroussel data={cities.data} itemComponent={Item} />
+        <Caroussel data={cities.data} itemComponent={({ item }: any) => <Item item={item} onPress={()=>navigation.navigate('Rechercher', {cities: [item.title]})} />} />
       </Card>
 
       <Card key="lmn" title="Les mieux notés" subtitle="Séjournez dans des hébergements uniques, les mieux notés par les utilisateurs explor.io">

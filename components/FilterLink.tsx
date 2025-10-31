@@ -1,11 +1,19 @@
 import { Text, TouchableOpacity, View, Modal, StyleSheet, ScrollView } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CustomCheckbox } from "./Checkbox/Checkbox";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { BottomTabParamList } from "../navigation/BottomTabs";
 
-export const FilterLink = ({ text, icon, options, onSelect }: any) => {
+export const FilterLink = ({ text, icon, options, onSelect, defaultSelected=[] }: any) => {
+
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
+
+  useEffect(()=>{
+    setSelected(defaultSelected)
+  }, [defaultSelected])
+
 
   const toggleOption = (id: string) => {
     setSelected((prev) =>
@@ -118,10 +126,6 @@ const styles = StyleSheet.create({
     width: 260,
     maxHeight: 400,
     elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
   },
   closeButton: {
     position: 'absolute',

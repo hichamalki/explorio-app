@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { usePlaces } from '../hooks/usePlaces';
 import { Loader } from '../components/Loader';
-import { Caroussel } from '../components/Caroussel/Caroussel';
-import { PlaceCard } from '../components/Caroussel/PlaceCard';
 import { styles as gs } from "../shared/styles/styles";
-import { List } from '../components/List/List';
 import { PlaceListItem } from '../components/List/PlaceListItem';
-import { HeaderLink } from '../components/HeaderLink';
 import { FilterLink } from '../components/FilterLink';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { BottomTabParamList } from '../navigation/BottomTabs';
 
 export default function SearchScreen() {
+
+  const route = useRoute<RouteProp<BottomTabParamList, 'Rechercher'>>();
+
   const [options, setOptions] = useState<any>({ page: 1 });
   const { places, loading }: any = usePlaces(options);
 
@@ -23,8 +24,10 @@ export default function SearchScreen() {
   ];
 
   useEffect(() => {
-    console.log("options => ", options)
-  }, [options])
+    if (route?.params?.cities) {
+      updateOption('cities', route?.params?.cities)
+    }
+  }, [route?.params?.cities])
 
   const updateOption = (key: string, value: any) => {
     setOptions((prev: any) => ({
@@ -42,7 +45,6 @@ export default function SearchScreen() {
       }));
     }
   };
-
 
   return (
     <>
@@ -73,11 +75,14 @@ export default function SearchScreen() {
 
           <View style={[gs.row, { maxHeight: 30, height: 125, paddingHorizontal: 20, marginBottom: 10 }]}>
             {filterData.map(item => <FilterLink
+              key={item.key}
               text={item.text}
               icon={item.icon}
               options={item.options}
+              defaultSelected={options[item.key] || []}
               onSelect={(opt: any) => updateOption(item.key, opt)}
-            />)}
+            />
+            )}
           </View>
         </>}
 

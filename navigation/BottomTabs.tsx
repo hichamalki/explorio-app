@@ -8,7 +8,7 @@ import { HomeScreen } from '../screens/Home/HomeScreen';
 import { usePreferences } from '../contexts/preferences.context';
 import { ProfileScreen } from '../screens/User/ProfileScreen';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabs() {
 
@@ -62,3 +62,11 @@ export default function BottomTabs() {
     </NavigationContainer >
   );
 }
+
+export type BottomTabParamList = {
+  Accueil: undefined;
+  Carte: undefined;
+  Rechercher: { cities: string[] };
+  Favoris: undefined;
+  Profile: undefined;
+};
