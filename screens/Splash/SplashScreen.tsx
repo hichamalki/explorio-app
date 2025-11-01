@@ -11,7 +11,7 @@ export const SplashScreen = () => {
 
     useEffect(() => {
         if (isLoaded) {
-            setTimeout(() => setShowSplash(false), 1);
+            setTimeout(() => setShowSplash(false), 2000);
         }
     }, [isLoaded]);
 

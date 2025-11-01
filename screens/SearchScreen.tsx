@@ -17,6 +17,14 @@ export default function SearchScreen() {
   const [options, setOptions] = useState<any>({ page: 1 });
   const { places, loading }: any = usePlaces(options);
 
+  const [initialFilters, setInitialFilters] = useState<any>(null);
+
+  useEffect(() => {
+    if (places?.filters && !initialFilters) {
+      setInitialFilters(places.filters); // snapshot initial
+    }
+  }, [places?.filters]);
+
   const filterData = [
     { text: "Villes", key: 'cities', icon: "location-outline", options: places?.filters?.cities },
     { text: "Tags", key: 'tags', icon: "pricetag-outline", options: places?.filters?.tags },
@@ -74,15 +82,20 @@ export default function SearchScreen() {
           </View>
 
           <View style={[gs.row, { maxHeight: 30, height: 125, paddingHorizontal: 20, marginBottom: 10 }]}>
-            {filterData.map(item => <FilterLink
-              key={item.key}
-              text={item.text}
-              icon={item.icon}
-              options={item.options}
-              defaultSelected={options[item.key] || []}
-              onSelect={(opt: any) => updateOption(item.key, opt)}
-            />
-            )}
+            {filterData.map(item => (
+              <FilterLink
+                key={item.key}
+                text={item.text}
+                icon={item.icon}
+                options={initialFilters?.[item.key]?.map((opt:any) => ({
+                  ...opt,
+                  count: places.filters?.[item.key]?.find((o:any) => o._id === opt._id)?.count ?? 0
+                })) || []}
+                defaultSelected={options[item.key] || []}
+                onSelect={(opt: any) => updateOption(item.key, opt)}
+              />
+            ))}
+
           </View>
         </>}
 

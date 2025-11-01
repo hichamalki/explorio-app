@@ -5,12 +5,12 @@ import { CustomCheckbox } from "./Checkbox/Checkbox";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { BottomTabParamList } from "../navigation/BottomTabs";
 
-export const FilterLink = ({ text, icon, options, onSelect, defaultSelected=[] }: any) => {
+export const FilterLink = ({ text, icon, options, onSelect, defaultSelected = [] }: any) => {
 
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setSelected(defaultSelected)
   }, [defaultSelected])
 
@@ -25,6 +25,8 @@ export const FilterLink = ({ text, icon, options, onSelect, defaultSelected=[] }
     setOpen(false);
     onSelect?.(selected);
   };
+
+  const isRating = text.toLowerCase().includes('note');
 
   return (
     <>
@@ -46,34 +48,39 @@ export const FilterLink = ({ text, icon, options, onSelect, defaultSelected=[] }
             <Text style={styles.modalTitle}>{text}</Text>
 
             <ScrollView style={styles.scrollArea} showsVerticalScrollIndicator={false}>
-              {options?.map((opt: any, idx: number) => {
-                const id = opt._id ?? opt.label;
-                const isRating = text.toLowerCase().includes('note'); // ou key === 'ratings'
+              {[...options]
+                .sort((a, b) => {
+                  if (isRating) {
+                    return Number(b._id) - Number(a._id); // ✅ tri par nombre d’étoiles
+                  }
+                  return (b.count ?? 0) - (a.count ?? 0); // ✅ tri par count
+                })
+                .map((opt: any, idx: number) => {
+                  const id = opt._id ?? opt.label;
 
-                const label = isRating ? (
-                  <View style={styles.starsRow}>
-                    {[...Array(Number(opt._id))].map((_, i) => (
-                      <Ionicons key={i} name="star" size={15} color="#FFCA00" />
-                    ))}
-                  </View>
-                ) : (
-                  <Text>{opt.label ?? opt._id}</Text>
-                );
+                  const label = isRating ? (
+                    <View style={styles.starsRow}>
+                      {[...Array(Number(opt._id))].map((_, i) => (
+                        <Ionicons key={i} name="star" size={15} color="#FFCA00" />
+                      ))}
+                    </View>
+                  ) : (
+                    <Text>{opt.label ?? opt._id}</Text>
+                  );
 
-                return (
-                  <View key={idx} style={styles.optionRow}>
-                    <CustomCheckbox
-                      label={label}
-                      checked={selected.includes(id)}
-                      onChange={() => toggleOption(id)}
-                    />
-                    {opt.count !== undefined && (
-                      <Text style={styles.optionCount}>{opt.count}</Text>
-                    )}
-                  </View>
-                );
-              })}
-
+                  return (
+                    <View key={idx} style={styles.optionRow}>
+                      <CustomCheckbox
+                        label={label}
+                        checked={selected.includes(id)}
+                        onChange={() => toggleOption(id)}
+                      />
+                      {opt.count !== undefined && (
+                        <Text style={styles.optionCount}>{opt.count}</Text>
+                      )}
+                    </View>
+                  );
+                })}
             </ScrollView>
 
             <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
