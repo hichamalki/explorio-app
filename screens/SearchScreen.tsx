@@ -32,10 +32,13 @@ export default function SearchScreen() {
   ];
 
   useEffect(() => {
-    if (route?.params?.cities) {
-      updateOption('cities', route?.params?.cities)
+    if (route?.params?.city) {
+      updateOption('cities', [route?.params?.city])
     }
-  }, [route?.params?.cities])
+    if (route?.params?.category) {
+      updateOption('tags', [route?.params?.category])
+    }
+  }, [route?.params])
 
   const updateOption = (key: string, value: any) => {
     setOptions((prev: any) => ({

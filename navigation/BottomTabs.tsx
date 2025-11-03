@@ -66,7 +66,7 @@ export default function BottomTabs() {
 export type BottomTabParamList = {
   Accueil: undefined;
   Carte: undefined;
-  Rechercher: { cities: string[] };
+  Rechercher: { city?: string, category?: string };
   Favoris: undefined;
   Profile: undefined;
 };

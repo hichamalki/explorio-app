@@ -44,9 +44,9 @@ export function usePlaces(options: Options = {}) {
         return query.toString();
     }, [
         options.q,
-        options.cities?.join(','),
-        options.tags?.join(','),
-        options.ratings?.join(','),
+        options.cities,
+        options.tags,
+        options.ratings,
         options.minRating,
         options.lat,
         options.lng,
