@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
 import BottomTabs from '../../navigation/BottomTabs';
 import { usePreferences } from '../../contexts/preferences.context';
-import { useStorage } from '../../hooks/useStorage.hook';
 import { View, Image, StyleSheet, Text } from 'react-native';
-import { fetchCities } from '../../services/Settings.service';
 
 export const SplashScreen = () => {
     const [showSplash, setShowSplash] = useState(true);
-    const { isLoaded, } = usePreferences();
+    const { isLoaded } = usePreferences();
 
     useEffect(() => {
         if (isLoaded) {
-            setTimeout(() => setShowSplash(false), 2000);
+            setTimeout(() => setShowSplash(false), 1000);
         }
     }, [isLoaded]);
 

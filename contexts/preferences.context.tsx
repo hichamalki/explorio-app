@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { PreferencesContextType } from '../models/Preferences';
 import { PREFERENCES_KEY, useStorage } from '../hooks/useStorage.hook';
-import { fetchCities } from '../services/Settings.service';
-import { expired } from '../shared/utils/date';
 
 const PreferencesContext = createContext<PreferencesContextType | undefined>(undefined);
 
@@ -24,9 +22,6 @@ export const PreferencesProvider = ({ children }: { children: React.ReactNode })
         category: 'activity',
         settings: {}
       };
-    }
-    if (!storedPreferences.settings.cities || storedPreferences.settings.cities.length === 0 || expired(storedPreferences.settings.cities.lastUpdate)) {
-      storedPreferences.settings.cities = { data: await fetchCities(), lastUpdate: new Date() }
     }
     await store(PREFERENCES_KEY, storedPreferences)
     setPreferences(storedPreferences);

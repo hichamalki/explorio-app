@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
         marginTop: 50
     },
     iosHeader: {
-        ...(Platform.OS === 'ios' && { paddingTop: 50 })
+        ...(Platform.OS === 'ios' && { paddingTop: 20 })
     },
     scrollView: {
         // paddingBottom: 50

@@ -110,6 +110,7 @@ export default function SearchScreen() {
         onEndReachedThreshold={0.9}
         ListFooterComponent={loading ? <Loader /> : null}
         contentContainerStyle={gs.scrollView}
+        showsVerticalScrollIndicator={false}
       />
 
     </>
