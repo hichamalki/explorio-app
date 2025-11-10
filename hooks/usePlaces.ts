@@ -7,15 +7,15 @@ type Options = {
     tags?: string[],
     ratings?: number[],
     minRating?: number,
-    lat?: number,
-    lng?: number,
+    lat?: number | null,
+    lng?: number | null,
     radius?: number,
     page?: number,
     limit?: number
 };
 
 export function usePlaces(options: Options = {}) {
-    const [places, setPlaces] = useState([]);
+    const [places, setPlaces] = useState<any>([]);
     const [loading, setLoading] = useState(false);
 
     const queryString = useMemo(() => {
